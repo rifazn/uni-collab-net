@@ -4,20 +4,25 @@ require_once('lib/common.php');
 $pdo = getPDO();
 session_start();
 
-// $user = getAuthUser();
-$user = $_SESSION['logged_in_username'];
-echo $user;
+// get the logged in user
+$user = getAuthUser();
 
-// force the user to login
+// force the user to login if he has not already
 if (!$user)
 {
-    // redirectAndExit('user.php');
+    redirectAndExit('user.php');
 }
-echo "Hello $user!<br>";
+
+// get the current content of the whole whiteboard
+$sql = "SELECT content FROM wb_global
+        ORDER BY id DESC
+        LIMIT 1";
+$stmt = $pdo->query($sql);
+$content = $stmt->fetchColumn();
 
 if ($_POST)
 {
-    $content = htmlEscape(['content']);
+    $content = htmlEscape($_POST['content']);
 
     $sql = 'INSERT into wb_global SET content= :content, email = :email';
     $stmt = $pdo->prepare($sql);
@@ -36,9 +41,10 @@ if ($_POST)
         <title>Whiteboard</title>
     </head>
     <body>
+        <?php echo "Hello $user!<br>"; ?>
         <h1>Welcome to the whiteboard!</h1>
         <form method="post" action="">
-            <textarea cols="50" id="" name="content" rows="10" placeholder="write something in it. All yours to use."></textarea>
+            <textarea cols="50" id="" name="content" rows="10" placeholder="write something in it. All yours to use."><?=$content ?></textarea>
             <button type="submit">Submit</button>
         </form>
     </body>
