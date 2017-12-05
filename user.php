@@ -7,7 +7,7 @@ $newUser = 0;
 
 if($_POST)
 {
-    $email = $_POST['username'];
+    $email = $_POST['email'];
     $pass = $_POST['pass'];
 
     // check the database if the user exists
@@ -16,7 +16,7 @@ if($_POST)
     $result = $stmt->execute( array('email' => $email, ));
 
     // if this is true, then the user exists so check his password
-    if ($result)
+    if ($stmt->fetchColumn())
     {
         $sql = "SELECT pass FROM user WHERE email = :email";
         $stmt = $pdo->prepare($sql);
@@ -24,15 +24,16 @@ if($_POST)
 
         $pwdhash = $stmt->fetchColumn();
 
-        if (password_verify($pwdhash, $pass)) {
+        if (password_verify($pass, $pwdhash)) {
             session_regenerate_id();
 
             $_SESSION['logged_in_username'] = $email;
+            redirectAndExit('index.php');
         }
-        else
-        {
-            $newUser = 1;
-        }
+    }
+    else
+    {
+        $newUser = 1;
     }
 }
 ?>

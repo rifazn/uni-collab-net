@@ -66,7 +66,7 @@ function tryLogin(PDO $pdo, $username, $password)
         FROM
             user
         WHERE
-            userEmail = :username
+            email = :username
     ";
     $stmt = $pdo->prepare($sql);
     $stmt->execute(
