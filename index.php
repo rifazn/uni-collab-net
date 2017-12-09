@@ -32,12 +32,16 @@ if ($_POST)
         echo 'that query did not happen. :(';
 }
 
+if (isset($_POST['logout'])) {
+    unset($_SESSION['logged_in_username']);
+    redirectAndExit('user.php');
+}
+
 ?>
 
 <!doctype html>
 <html lang="en">
     <head>
-        <meta charset="UTF-8"/>
         <title>Whiteboard</title>
     </head>
     <body>
@@ -46,6 +50,7 @@ if ($_POST)
         <form method="post" action="">
             <textarea cols="50" id="" name="content" rows="10" placeholder="write something in it. All yours to use."><?=$content ?></textarea>
             <button type="submit">Submit</button>
+            <button type="submit" name="logout">Logout</button>
         </form>
     </body>
 </html>
