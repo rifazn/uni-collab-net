@@ -30,6 +30,7 @@
      }
     </style>
     <body>
+
         <div id="content">
             <header id="main-header">
                 <h1>Uni Collab Net</h1>
@@ -66,5 +67,6 @@
                 uni collab
             </footer>
         </div>
+
     </body>
 </html>
