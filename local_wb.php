@@ -4,7 +4,6 @@
 	session_start();
 	$user = getAuthUser();
 	$course = $_GET["c"];
-	echo "welcome to" . $course . "<br>";
 	$sql = "select content 
 			from wb 
 			where course_id = :course_id
@@ -32,28 +31,48 @@
 		    echo 'that query did not happen. :(';
 		}
 
-		if (isset($_POST['logout'])) {
+		
+	}
+	if (isset($_POST['logout']))
+	{
 			unset($_SESSION['logged_in_username']);
 			redirectAndExit('user.php');
-		}
-	}	
+	}		
 ?>
 
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Uni Collab Net</title>
+	<meta charset="utf-8">
+	<link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+	<div id="content">
+		<header id="main-header">
+			<?php require('templates/header.html.php'); ?>
+		</header>
 
+		<nav class="contents-nav">
+			<?php require('templates/nav.html.php') ?>
+		</nav>
 
-<!doctype html>
-<html lang="en">
-    <head>
-        <title>local Whiteboard</title>
-    </head>
-    <body>
-        <?php echo "Hello $user!<br>"; ?>
-        <h1>Welcome to the whiteboard!</h1>
-        <form method="post">
-            <textarea cols="50" id="" name="content" rows="10" placeholder="write something in it. All yours to use."><?=$content ?></textarea>
-            <button type="submit">Submit</button>
-            <button type="submit" name="logout">Logout</button>
-        </form>
-    </body>
+		<main class="main-content">
+			<?php echo "welcome to course:" . $course . "<br>"; ?>
+			<form method="post">
+				<textarea cols="50" id="" name="content" rows="10" placeholder="write something in it. All yours to use."><?=$content ?></textarea>
+				<button type="submit">Submit</button>
+				<button type="submit" name="logout">Logout</button>
+			</form>
+		</main>
+
+		<aside class="sidebar">
+			<?php require('templates/aside.html.php') ?>
+		</aside> 
+
+		<footer>
+			<?php require('templates/footer.html.php'); ?>
+		</footer>
+	</div>
+</body>
 </html>
-

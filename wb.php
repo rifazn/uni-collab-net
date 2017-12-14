@@ -6,14 +6,13 @@ session_start();
 
 // $user = getAuthUser();
 $user = $_SESSION['logged_in_username'];
-echo $user;
 
 // force the user to login
 if (!$user)
 {
-    // redirectAndExit('user.php');
+    redirectAndExit('user.php');
 }
-echo "Hello $user!<br>";
+// echo "Hello $user!<br>";
 
 if ($_POST)
 {
@@ -27,20 +26,46 @@ if ($_POST)
         echo 'that query did not happen. :(';
 }
 
+if (isset($_POST['logout']))
+{
+        unset($_SESSION['logged_in_username']);
+        redirectAndExit('user.php');
+}       
+
 ?>
 
-<!doctype html>
-<html lang="en">
-    <head>
-        <meta charset="UTF-8"/>
-        <title>Whiteboard</title>
-    </head>
-    <body>
-        <h1>Welcome to the whiteboard!</h1>
-        <form method="post" action="">
-            <textarea cols="50" id="" name="content" rows="10" placeholder="write something in it. All yours to use."></textarea>
-            <button type="submit">Submit</button>
-        </form>
-    </body>
-</html>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Uni Collab Net</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+    <div id="content">
+        <header id="main-header">
+            <?php require('templates/header.html.php'); ?>
+        </header>
 
+        <nav class="contents-nav">
+            <?php require('templates/nav.html.php') ?>
+        </nav>
+
+        <main class="main-content">
+            <form method="post" action="">
+                <textarea cols="50" id="" name="content" rows="10" placeholder="write something in it. All yours to use."></textarea>
+                <button type="submit">Submit</button>
+                <button type="submit" name="logout">Logout</button>
+            </form>
+        </main>
+
+        <aside class="sidebar">
+            <?php require('templates/aside.html.php') ?>
+        </aside> 
+
+        <footer>
+            <?php require('templates/footer.html.php'); ?>
+        </footer>
+    </div>
+</body>
+</html>

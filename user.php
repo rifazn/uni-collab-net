@@ -53,3 +53,40 @@ if($_POST)
         ?>
     </body>
 </html>
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Uni Collab Net</title>
+        <meta charset="utf-8">
+        <link rel="stylesheet" type="text/css" href="style.css">
+    </head>
+    <body>
+        <div id="content">
+            <header id="main-header">
+                <?php require('templates/header.html.php'); ?>
+            </header>
+            
+            <nav class="contents-nav">
+                
+            </nav>
+            
+            <main class="main-content">
+                <?php
+        // load the appropriate templates
+        if ($newUser)
+            require('register-user.html.php');
+        else
+            require('login-user.html.php');
+        ?>
+            </main>
+            
+            <aside class="sidebar">
+                
+            </aside> 
+
+            <footer>
+                <?php require('templates/footer.html.php'); ?>
+            </footer>
+        </div>
+    </body>
+</html>
