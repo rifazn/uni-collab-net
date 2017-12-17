@@ -31,6 +31,12 @@ if (isset($_POST['logout']))
         unset($_SESSION['logged_in_username']);
         redirectAndExit('user.php');
 }       
+if(isset($_POST['history']))
+{	redirectAndExit('history.php');
+}
+   $sql = "SELECT DISTINCT email from wb_global join user USING(email) " ;
+   $stmt = $pdo->query($sql) ;
+  
 
 ?>
 
@@ -41,7 +47,19 @@ if (isset($_POST['logout']))
     <meta charset="utf-8">
     <link rel="stylesheet" type="text/css" href="style.css">
 </head>
-<body>
+<body> 
+    <div id="contributors" >
+    <ul>
+			<?php
+                 while($row = $stmt->fetch(PDO::FETCH_ASSOC)):;?>    
+                 <li> <?php echo $row['email'];?>  </li>
+    
+   				 <?php endwhile; ?>
+    	</ul>
+    </div>
+
+
+
     <div id="content">
         <header id="main-header">
             <?php require('templates/header.html.php'); ?>
@@ -56,15 +74,18 @@ if (isset($_POST['logout']))
                 <textarea cols="50" id="" name="content" rows="10" placeholder="write something in it. All yours to use."></textarea>
                 <button type="submit">Submit</button>
                 <button type="submit" name="logout">Logout</button>
+                <button type="submit" name="history">history</button>
             </form>
         </main>
 
         <aside class="sidebar">
             <?php require('templates/aside.html.php') ?>
+            
         </aside> 
 
         <footer>
             <?php require('templates/footer.html.php'); ?>
+            
         </footer>
     </div>
 </body>
