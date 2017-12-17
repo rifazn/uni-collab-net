@@ -7,9 +7,13 @@ session_start();
 // get the user info, null if not logged in
 $user = getAuthUser();
 
-if ($user && isset($_POST[]))
+// redirect user to login if not logged in
+if (!$user)
+    redirectAndExit('user.php');
+
+if ($_POST)
 {
-    $content = htmlEscape(['content']);
+    $content = htmlEscape($_POST['content']);
 
     $sql = 'INSERT into wb_global SET content= :content, email = :email';
     $stmt = $pdo->prepare($sql);

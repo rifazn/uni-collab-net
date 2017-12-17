@@ -4,36 +4,74 @@
         <meta charset="UTF-8"/>
         <title>Your own blog</title>
         <style>
-         #content {
+         body {
+             margin: 0;
+             font-size: 16px;
+         }
+         #post {
              max-width: 732px;
              margin: 0 auto;
          }
          header {
-             text-align: center;
+             text-align: left;
+             font-size: 2rem;
          }
-         #content input {
-             width: 610px;
+
+         button {
+             padding: 2px 4px;
+             width: 12%;
+         }
+         #post input {
+             width: 84%;
              padding: 0 0 0 0;
              margin: 0 0 0 0;
          }
+         /*
+            #content input, textarea {
+            border: none;
+            }
+            #content textarea {
+            overflow-y: auto;
+            // hides the resize icon
+            resize: none;
+            }
+          */
 
-         #content input, textarea {
-             border: none;
+         /* Styles for page layout */
+         #content {
+             display: grid;
+             grid-template-columns: 1fr 4fr;
+             grid-template-areas:
+                 "nav main";
          }
-         #content textarea {
-             overflow-y: auto;
-             // hides the resize icon
-             resize: none;
+
+         main {
+             grid-area: main;
          }
+
+         nav {
+             grid-area: nav;
+             border-right: 1px solid black;
+             height: 100vh;
+         }
+
+         nav > ul {
+             list-style: none;
+         }
+
         </style>
     </head>
     <body>
-        <header>
-            <h1>Your own personal blog space</h1>
-        </header>
-
-        <main>
-            <div id="content">
+        <div id="content">
+            <nav>
+                Previously...
+                <!-- TODO: List of previously made posts -->
+                <?php include('blog-nav.html.php') ?>
+            </nav>
+            <main id="post">
+                <header>
+                    New Post
+                </header>
                 <form method="POST">
                     <input name="title" type="text" placeholder="Title..."/>
                     <button type="submit">Publish</button>
@@ -42,10 +80,9 @@
                     <address class="author">
                         Your Name
                     </address>
-
-                    <textarea cols="101" placeholder="Your story..."></textarea>
+                    <textarea name="content" cols="99" placeholder="Your story..."></textarea>
                 </form>
-            </div>
-        </main>
+            </main>
+        </div>
     </body>
 </html>
