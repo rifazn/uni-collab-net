@@ -1,3 +1,15 @@
+<?php
+		// require_once('lib/common.php');
+		$pdo = getPDO();
+		$user = getAuthUser();
+		$sql="select name 
+				from user
+				where email = :email";
+		$stmt = $pdo->prepare($sql);
+  	    $result = $stmt->execute( array( 'email' => $user, ) ) ;
+  	    $name = $stmt->fetchColumn();
+
+?>
 <!doctype html>
 <html lang="en">
     <head>
@@ -78,7 +90,7 @@
 
                     <!-- TODO: Option for writing Anonynously -->
                     <address class="author">
-                        Your Name
+                        <?php echo $name ; ?>
                     </address>
                     <textarea name="content" cols="99" placeholder="Your story..."></textarea>
                 </form>
