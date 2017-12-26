@@ -11,7 +11,7 @@ $user = getAuthUser();
 if (!$user)
     redirectAndExit('user.php');
 
-$courses = getCourses($pdo);
+$courses = getCourses($pdo, $user);
 
 if ($_POST)
 {
@@ -35,16 +35,31 @@ if ($_POST)
             </nav>
 
             <main class="main-content">
-                <?php echo print_r($courses) ?>
+                <form action="">
+                
+                    <label for="course_id">Course:</label>
+                    <select name="course_id">
+                        <?php foreach ($courses as $course): ?>
+                            <option value="<?=$course['course_id'] ?>"><?=$course['course_code'] , ' ' , $course['course_title'] ?></option>
+                        <?php endforeach ?>
+                    </select>
+                    
+                    
+                    
+                </form>
+                <label for="upoadfiles">Upload pictures:
+                    <input id="uploadfiles" name="uploadfiles" type="file" multiple="multiple" /> </label>
             </main>
 
             <aside class="sidebar">
-            	<?php require('templates/aside.html.php') ?>
-        	</aside> 
+                <?php require('templates/aside.html.php') ?>
+            </aside> 
 
-        	<footer>
-        		<?php require('templates/footer.html.php'); ?>
+            <footer>
+                <?php require('templates/footer.html.php'); ?>
             </footer>
         </div>
+        
+        <script src="resources/upload.js"></script>
     </body>
 </html>

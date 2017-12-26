@@ -1,2 +1,2 @@
-<?php echo "Hello, Sourav Saha"; ?>
+<?php echo "Hello, $user"; ?>
 <button>Logout</button>

@@ -41,14 +41,20 @@ if ($_POST)
             </nav>
 
             <main class="main-content">
+                <form method="post" action="">
+                    <textarea cols="50" id="" name="content" rows="10" placeholder="write something in it. All yours to use."></textarea>
+                    <button type="submit">Submit</button>
+                    <button type="submit" name="logout">Logout</button>
+                    <button type="submit" name="history">history</button>
+                </form>
             </main>
 
             <aside class="sidebar">
-            	<?php require('templates/aside.html.php') ?>
-        	</aside> 
+                <?php require('templates/aside.html.php') ?>
+            </aside> 
 
-        	<footer>
-        		<?php require('templates/footer.html.php'); ?>
+            <footer>
+                <?php require('templates/footer.html.php'); ?>
             </footer>
         </div>
     </body>

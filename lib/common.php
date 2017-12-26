@@ -50,12 +50,14 @@ function isLoggedIn()
     return isset($_SESSION['logged_in_username']);
 }
 
-function getCourses($pdo) {
-    $user = getAuthUser();
-
+function getCourses(PDO $pdo, $user)
+{
     $sql = "SELECT * FROM takes
-            WHERE email = $user";
-    $courses = $pdo->query($sql);
+            WHERE email = :email";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute( array('email' => $user, ));
+
+    $courses = $stmt->fetchAll();
 
     return $courses;
 }
