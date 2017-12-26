@@ -2,14 +2,15 @@
 	require_once('lib/common.php');
 	$pdo = getPDO();
 	// session_start();
-		$sql = "select id , time_date, content  
+		$sql = "select id , time_date, RIGHT(content, 50)  
 				from wb_global" ;
 				
-		  $sql1 ="select id , time_date, content  
+/*		  $sql1 ="select id , time_date, content  
 				from wb_global" ;
+				*/
 			
 		$stmt = $pdo->query($sql) ;
-	   $stmt1 = $pdo->query($sql1) ;
+/*	   $stmt1 = $pdo->query($sql1) ;
 	   $c=0 ;
 	   while($row = $stmt->fetch(PDO::FETCH_ASSOC)) 
 	   {	
@@ -28,7 +29,7 @@
 	   		echo "<br>";
 	   		
 	   }
-	   
+*/	   
 ?>
 
 

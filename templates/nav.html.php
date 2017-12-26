@@ -7,5 +7,6 @@
 	</ul>
 	<li>Course Resources</li>
 	<li>Your Cloud</li>
+	<li><a href="chat_global.php">chating</a>  </li>
 	<li>Classmates from your courses</li>
 </ul>
