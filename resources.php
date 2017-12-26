@@ -11,16 +11,10 @@ $user = getAuthUser();
 if (!$user)
     redirectAndExit('user.php');
 
+$courses = getCourses($pdo, $user);
+
 if ($_POST)
 {
-    $content = htmlEscape($_POST['content']);
-
-    $sql = 'INSERT into wb_global SET content= :content, email = :email';
-    $stmt = $pdo->prepare($sql);
-    $result = $stmt->execute( array( 'content' => $content, 'email' => $user, ) );
-
-    if (!$result)
-        echo 'that query did not happen. :(';
 }
 ?>
 <!DOCTYPE html>
@@ -41,12 +35,20 @@ if ($_POST)
             </nav>
 
             <main class="main-content">
-                <form method="post" action="">
-                    <textarea cols="50" id="" name="content" rows="10" placeholder="write something in it. All yours to use."></textarea>
-                    <button type="submit">Submit</button>
-                    <button type="submit" name="logout">Logout</button>
-                    <button type="submit" name="history">history</button>
+                <form action="">
+                
+                    <label for="course_id">Course:</label>
+                    <select name="course_id">
+                        <?php foreach ($courses as $course): ?>
+                            <option value="<?=$course['course_id'] ?>"><?=$course['course_code'] , ' ' , $course['course_title'] ?></option>
+                        <?php endforeach ?>
+                    </select>
+                    
+                    
+                    
                 </form>
+                <label for="upoadfiles">Upload pictures:
+                    <input id="uploadfiles" name="uploadfiles" type="file" multiple="multiple" /> </label>
             </main>
 
             <aside class="sidebar">
@@ -57,5 +59,7 @@ if ($_POST)
                 <?php require('templates/footer.html.php'); ?>
             </footer>
         </div>
+        
+        <script src="resources/upload.js"></script>
     </body>
 </html>

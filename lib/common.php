@@ -1,17 +1,6 @@
 <?php
 
 /**
- * Gets the DSN for the SQLite connection
- * 
- * @return string
- */
-function getDsn()
-{
-    // TODO:
-    return null;
-}
-
-/**
  * Gets the PDO object for database acccess
  * 
  * @return \PDO
@@ -59,4 +48,16 @@ function getAuthUser()
 function isLoggedIn()
 {
     return isset($_SESSION['logged_in_username']);
+}
+
+function getCourses(PDO $pdo, $user)
+{
+    $sql = "SELECT * FROM takes
+            WHERE email = :email";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute( array('email' => $user, ));
+
+    $courses = $stmt->fetchAll();
+
+    return $courses;
 }

@@ -12,7 +12,6 @@
 		
 ?>
 <ul> 
-   <h1> YOUR POSTS </h1>
    <?php while($row = $stmt->fetch(PDO::FETCH_ASSOC)):;?>
 	<li> <b><u>TITLE : <?php echo $row['title'];?></b></u>  </li>
 	<li><?php echo $row['content'];?></li>
