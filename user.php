@@ -37,22 +37,6 @@ if($_POST)
     }
 }
 ?>
-<!doctype html>
-<html lang="en">
-    <head>
-        <meta charset="UTF-8"/>
-        <title>Whiteboard | User Panel</title>
-    </head>
-    <body>
-        <?php
-        // load the appropriate templates
-        if ($newUser)
-            require('register-user.html.php');
-        else
-            require('login-user.html.php');
-        ?>
-    </body>
-</html>
 <!DOCTYPE html>
 <html>
     <head>

@@ -34,6 +34,7 @@ if($_GET)
         <title>Uni Collab Net</title>
         <meta charset="utf-8">
         <link rel="stylesheet" type="text/css" href="style.css">
+        <?php include('../templates/html-head.html.php') ?>
     </head>
     <body>
         <div id="content">

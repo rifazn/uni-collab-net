@@ -7,6 +7,10 @@ session_start();
 // get the user info
 $user = getAuthUser();
 
+// get the markdown parser
+require_once('../lib/parsedown/Parsedown.php');
+$Parsedown = new Parsedown();
+
 // redirect user to login if not logged in
 if (!$user)
     redirectAndExit('../user.php');
@@ -20,7 +24,7 @@ if (!$user)
 if ($_POST)
 {
     $title = $_POST['title'];
-    $content = $_POST['content'];
+    $content = $Paredown->text($_POST['content']);
 
     $sql = 'INSERT into post
             SET title = :title,

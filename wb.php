@@ -4,6 +4,10 @@ require_once('lib/common.php');
 $pdo = getPDO();
 session_start();
 
+// get the markdown parser
+require_once('lib/parsedown/Parsedown.php');
+$Parsedown = new Parsedown();
+
 // $user = getAuthUser();
 $user = $_SESSION['logged_in_username'];
 
@@ -12,6 +16,9 @@ if (!$user)
 {
     redirectAndExit('user.php');
 }
+
+// get the user's courses
+$courses = getCourses($pdo, $user);
 
 // get the current content of the whole whiteboard
 $sql = "SELECT content FROM wb_global
@@ -34,8 +41,8 @@ if ($_POST)
 
 if (isset($_POST['logout']))
 {
-        unset($_SESSION['logged_in_username']);
-        redirectAndExit('user.php');
+    unset($_SESSION['logged_in_username']);
+    redirectAndExit('user.php');
 }
 
 if(isset($_POST['history']))
@@ -50,59 +57,59 @@ $stmt = $pdo->query($sql) ;
 
 <!DOCTYPE html>
 <html>
-<head>
-    <title>Uni Collab Net</title>
-    <meta charset="utf-8">
-    <link rel="stylesheet" type="text/css" href="style.css">
-</head>
-<body>
-    <div id="contributors" >
-    <ul>
-        <?php while($row = $stmt->fetch(PDO::FETCH_ASSOC)):;?>
-            <li> <?php echo $row['email'];?>  </li>
-        <?php endwhile; ?>
-    </ul>
-    </div>
+    <head>
+        <title>Uni Collab Net</title>
+        <meta charset="utf-8">
+        <link rel="stylesheet" type="text/css" href="style.css">
 
-    <div id="content">
-        <header id="main-header">
-            <?php require('templates/header.html.php'); ?>
-        </header>
+        <?php include('templates/html-head.html.php') ?>
+    </head>
+    <body>
 
-        <nav class="contents-nav">
-            <?php require('templates/nav.html.php') ?>
-        </nav>
+        <div id="content">
+            <header id="main-header">
+                <?php require('templates/header.html.php'); ?>
+            </header>
 
-        <main class="main-content">
+            <nav class="contents-nav">
+                <?php require('templates/nav.html.php') ?>
+            </nav>
 
-        <?php echo $content ?>
+            <main class="main-content">
 
-            <div id="md">
-                
-            </div>
+                <div id="wb">
+                    <?php echo $Parsedown->text($content) ?>
+                </div>
 
-            <form method="post" action="">
-                <textarea cols="50" id="" name="content" rows="10" placeholder="write something in it. All yours to use."><?=htmlEscape($content)?></textarea>
-                <button type="submit">Submit</button>
-                <button type="submit" name="logout">Logout</button>
-                <button type="submit" name="history">history</button>
-            </form>
-        </main>
+                <form method="post" action="">
+                    <textarea cols="50" id="" name="content" rows="10" placeholder="write something in it. All yours to use."><?=htmlEscape($content)?></textarea>
+                    <button type="submit">Submit</button>
+                    <button type="submit" name="logout">Logout</button>
+                    <button type="submit" name="history">history</button>
+                </form>
+                <div id="contributors" >
+                    <ul>
+                        <?php while($row = $stmt->fetch(PDO::FETCH_ASSOC)):;?>
+                            <li> <?php echo $row['email'];?>  </li>
+                        <?php endwhile; ?>
+                    </ul>
+                </div>
+            </main>
 
-        <aside class="sidebar">
-            <?php require('templates/aside.html.php') ?>
+            <aside class="sidebar">
+                <?php require('templates/aside.html.php') ?>
 
-        </aside>
+            </aside>
 
-        <footer>
-            <?php require('templates/footer.html.php'); ?>
+            <footer>
+                <?php require('templates/footer.html.php'); ?>
 
-        </footer>
-    </div>
+            </footer>
+        </div>
 
-    <script>
-     var post = "<?php Print($content); ?>";
-     console.log("trying to get from php: " + post);
-    </script>
-</body>
+        <script>
+         var post = "<?php Print($content); ?>";
+         console.log("trying to get from php: " + post);
+        </script>
+    </body>
 </html>
